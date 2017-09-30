@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HomeWork</string>
+    <string name="title_activity_class">ClassActivity</string>
+    <string name="title_activity_subject">subjectActivity</string>
+    <string name="title_activity_topic">Select Topic</string>
+    <string name="title_activity_qusetion">QuestionActivity</string>
+</resources>
