@@ -8,6 +8,16 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/image"/>
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:src="@drawable/ehcc"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enthronement Private School"
+        android:gravity="center"
+        android:textSize="@dimen/_28sdp"
+        android:fontFamily="cursive"/>
 </LinearLayout>
 

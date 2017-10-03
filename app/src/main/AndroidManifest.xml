@@ -23,8 +23,7 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.lordprimustl.primaltutors" />
 
-        <activity android:name=".SplashScreen"
-            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout">
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,14 +33,13 @@
         <activity
             android:name=".ClassActivity"
             android:label="@string/title_activity_class"
-            android:theme="@style/AppTheme"
-            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".SubjectActivity"
             android:label="@string/title_activity_subject"
             android:parentActivityName=".ClassActivity"
             android:theme="@style/AppTheme"
-            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout">
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.lordprimustl.primaltutors.ClassActivity" />

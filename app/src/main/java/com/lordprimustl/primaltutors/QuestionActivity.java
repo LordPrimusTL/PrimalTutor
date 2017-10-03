@@ -2,7 +2,9 @@ package com.lordprimustl.primaltutors;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -41,6 +43,15 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_qusetion);
         toolbar = (Toolbar) findViewById(R.id.qtoolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setNavigationIcon(R.drawable.ic_action_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         int class_id = Integer.parseInt(getIntent().getStringExtra("class_id"));
         int sub_id = Integer.parseInt(getIntent().getStringExtra("sub_id"));
         int topic_id = Integer.parseInt(getIntent().getStringExtra("topic_id"));
@@ -64,6 +75,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void setUpData() {
+        rgb.clearCheck();
         if((x) < ques.size())
         {
             ttv.setText("Question " + (x + 1));
@@ -81,24 +93,31 @@ public class QuestionActivity extends AppCompatActivity {
                 smtbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int sel = rgb.getCheckedRadioButtonId();
-                        ans = (RadioButton) findViewById(sel);
-                        out.println(ans.getText().toString());
-                        out.println(ques.get(x).getAnswer());
-                     if(ans.getText().toString().equals(ques.get(x).getAnswer()))
+                        Integer sel;
+                        sel = rgb.getCheckedRadioButtonId();
+                        if(sel != null)
                         {
-                            score = score + 1;
-                            Snackbar.make(toolbar,"Correct Answer!", Snackbar.LENGTH_LONG).show();
-                            x = x + 1;
-                            setUpData();
+                            ans = (RadioButton) findViewById(sel);
+                            out.println(ans.getText().toString());
+                            out.println(ques.get(x).getAnswer());
+                            if(ans.getText().toString().equals(ques.get(x).getAnswer()))
+                            {
+                                score = score + 1;
+                                Snackbar.make(toolbar,"Correct Answer!", Snackbar.LENGTH_LONG).show();
+                                x = x + 1;
+                                Handlerr();
+                            }
+                            else
+                            {
+                                Snackbar.make(toolbar,"Wrong, Answer is " + ques.get(x).getAnswer(), Snackbar.LENGTH_LONG).show();
+                                x = x + 1;
+                                Handlerr();
+                            }
                         }
                         else
                         {
-                            Snackbar.make(toolbar,"Wrong, Answer is " + ques.get(x).getAnswer(), Snackbar.LENGTH_LONG).show();
-                            x = x + 1;
-                            setUpData();
+                            Snackbar.make(toolbar,"Please Choose An Option", Snackbar.LENGTH_SHORT).show();
                         }
-
                     }
                 });
             }
@@ -115,30 +134,22 @@ public class QuestionActivity extends AppCompatActivity {
                     x = 0;
                     score = 0;
                     smtbtn.setText("Submit");
-                    setUpData();
+                    Handlerr();
                 }
             });
-            Snackbar.make(toolbar,"Score is " + score, Snackbar.LENGTH_INDEFINITE).show();
+            Snackbar.make(toolbar,"Score is " + score, Snackbar.LENGTH_LONG).show();
         }
 
     }
 
-    public void DialogMan(int c)
+    public void Handlerr()
     {
-        AlertDialog.Builder ab = new AlertDialog.Builder(QuestionActivity.this);
-        if(c == 1)
-            ab.setView(R.layout.rightans);
-        else
-            ab.setView(R.layout.wrong);
-        ab.setCancelable(false);
-        ab.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                x = x + 1;
-                dialogInterface.dismiss();
+            public void run() {
                 setUpData();
             }
-        }).show();
+        }, 4000);
     }
 
     @Override
